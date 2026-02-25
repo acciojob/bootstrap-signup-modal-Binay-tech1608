@@ -1,19 +1,33 @@
 const signupForm = document.getElementById('signupForm');
 
 signupForm.addEventListener('submit', (e) => {
-  e.preventDefault(); // Stop page refresh
+  e.preventDefault(); 
   
-  // Collect data
+  // 1. Collect data
   const email = document.getElementById('emailInput').value;
   const password = document.getElementById('passwordInput').value;
-  const confirmpassword = document.getElementById('confirmPassword').value;
+  const confirmPassword = document.getElementById('confirmPassword').value;
 
-  console.log("Signing up with:", email, password);
+  // 2. Validation: Check if passwords match
+  if (password !== confirmPassword) {
+    alert("Passwords do not match! Please try again.");
+    return; // Stop the function here
+  }
 
-  // Close the modal programmatically after success
+  // 3. Validation: Minimum length (Example)
+  if (password.length < 8) {
+    alert("Password must be at least 8 characters long.");
+    return;
+  }
+
+  // 4. Success Path
+  console.log("Proceeding with signup for:", email);
+
+  // Close the Bootstrap Modal
   const modalElement = document.getElementById('signupModal');
-  const modalInstance = bootstrap.Modal.getInstance(modalElement);
+  const modalInstance = bootstrap.Modal.getOrCreateInstance(modalElement);
   modalInstance.hide();
   
   alert("Account created successfully!");
+  signupForm.reset(); // Clear the form for next time
 });
